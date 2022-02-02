@@ -148,9 +148,6 @@ const StyledGallerySlider = styled.div`
     
     .image:last-of-type, .image:first-of-type {
         top: -30px;
-    }
-
-    .image:last-of-type {
         z-index: 3;
     }
 
