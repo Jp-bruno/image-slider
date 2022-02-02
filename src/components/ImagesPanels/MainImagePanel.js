@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ImageSliderContext } from '../../context/imageContext';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 const StyledMainImagePanel = styled.div`
     .imagem {
@@ -38,7 +38,7 @@ export default function MainImagePanel() {
 
     return (
         <StyledMainImagePanel>
-            <div className={`imagem ${context.state.images[2]}`}></div>
+            <div className={`imagem ${context.imageRef}`}></div>
         </StyledMainImagePanel>
     )
 }

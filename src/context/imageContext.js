@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 
 export const ImageSliderContext = createContext();
 
@@ -11,29 +11,25 @@ export default function ImageSliderContextProvider({ children }) {
         }
     })
 
-    function nextImage() {
+    const imageRef = useRef('red');
+
+    function moveImagens(direction) {
         const newArr = [...state.images];
 
-        let first = newArr.shift();
+        if (direction === 'left') {
+            let last = newArr.pop();
 
-        newArr.push(first)
+            newArr.unshift(last);
+
+        } else {
+            let first = newArr.shift();
+
+            newArr.push(first);
+        }
 
         setState({
             ...state,
-            images: newArr
-        })
-    }
-
-    function previousImage() {
-        const newArr = [...state.images];
-
-        let last = newArr.pop();
-
-        newArr.unshift(last)
-
-        setState({
-            ...state,
-            images: newArr
+            images: newArr,
         })
     }
 
@@ -53,21 +49,29 @@ export default function ImageSliderContextProvider({ children }) {
         } else {
             const isLeft = ev.target.classList.contains('left');
 
+            if (isLeft) {
+                imageRef.current = state.images[1]
+            } 
+            
+            if (!isLeft) {
+                imageRef.current = state.images[3]
+            }
+
             toggleMoving(isLeft ? 'left' : 'right');
-    
+
             setTimeout(() => {
                 if (isLeft) {
-                    previousImage()
+                    moveImagens('left');
                 } else {
-                    nextImage()
+                    moveImagens('right');
                 }
             }, 1500)
+
         }
     }
 
-
     return (
-        <ImageSliderContext.Provider value={{ state, changeImageByArrow }}>
+        <ImageSliderContext.Provider value={{ state, changeImageByArrow, imageRef: imageRef.current }}>
             {children}
         </ImageSliderContext.Provider>
     )

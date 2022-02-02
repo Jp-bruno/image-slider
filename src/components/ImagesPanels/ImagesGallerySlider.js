@@ -8,6 +8,8 @@ const StyledGallerySlider = styled.div`
     width: 100%;
     height: 50px;
 
+    /* ------ Left Keyframes ------ */
+
     @keyframes up1left {
         100% {
             top: -40px;
@@ -41,7 +43,7 @@ const StyledGallerySlider = styled.div`
         }
     }
 
-    /* ------ Right Keyframes --------- */
+    /* ------ Right Keyframes ------ */
 
 
     @keyframes up1right {
@@ -73,6 +75,8 @@ const StyledGallerySlider = styled.div`
         }
     }
 
+    /* ------ Styling images ------ */
+
     .image {
         width: 100px;
         height: 100px;
@@ -86,23 +90,23 @@ const StyledGallerySlider = styled.div`
 
         &:nth-of-type(1).moving-left {
             animation: up1left 1.5s ease;
-            animation-fill-mode: both;
+            
         }
     
         &:nth-of-type(2).moving-left {
             animation: up2left 1.5s ease;
-            animation-fill-mode: both;
+            
         }
 
         &:nth-of-type(3).moving-left {
             animation: down1left 1.5s ease;
-            animation-fill-mode: both;
+            
 
         }
 
         &:nth-of-type(4).moving-left {
             animation: down2left 1.5s ease ;
-            animation-fill-mode: both;
+            
         }
 
         &:nth-of-type(5).moving-left {
@@ -121,22 +125,22 @@ const StyledGallerySlider = styled.div`
             
         &:nth-of-type(2).moving-right {
             animation: down2right 1.5s ease backwards;
-            animation-fill-mode: both;
+            
         }
 
         &:nth-of-type(3).moving-right {
             animation: down1right 1.5s ease backwards;
-            animation-fill-mode: both;
+            
         }
 
         &:nth-of-type(4).moving-right {
             animation: up2right 1.5s ease backwards;
-            animation-fill-mode: both;
+            
         }
 
         &:nth-of-type(5).moving-right {
             animation: up1right 1.5s ease backwards;
-            animation-fill-mode: both;
+            
         }
     }
 
@@ -182,7 +186,15 @@ const StyledGallerySlider = styled.div`
         background: yellow;
     }
 
+    /* ------ Styling fake image behind last and first image ------ */
+
     .falso {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border: solid 5px black;
+        bottom: -20px;
+        z-index: 0;
         transform: scale(0);
         opacity: 0;
     }
@@ -194,23 +206,11 @@ const StyledGallerySlider = styled.div`
     }
 
     .falso.esquerdo{
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        border: solid 5px black;
-        bottom: -20px;
         left: -10px;
-        z-index: 0;
     }
 
     .falso.direito{
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        border: solid 5px black;
-        bottom: -20px;
         right: -10px;
-        z-index: 0;
     }
 
 `;
@@ -219,12 +219,14 @@ export default function GallerySlider() {
     const context = useContext(ImageSliderContext);
 
     return (
-        <StyledGallerySlider>
-            <span className={`falso esquerdo ${context.state.images[4]} ${context.state.moving.direction === 'left' ? 'moving' : ''}`}></span>
+        <StyledGallerySlider >
+            <span className={`falso esquerdo ${context.state.images[4]} ${context.state.moving.direction === 'left' ? 'moving' : ''}`} />
+
             {context.state.images.map((el, index) => {
-                return <GalleryItem image={el} index={index} key={index}></GalleryItem>
+                return <GalleryItem image={el} index={index} key={index} />
             })}
-            <span className={`falso direito ${context.state.images[0]} ${context.state.moving.direction === 'right' ? 'moving' : ''}`}></span>
+
+            <span className={`falso direito ${context.state.images[0]} ${context.state.moving.direction === 'right' ? 'moving' : ''}`} />
         </StyledGallerySlider>
     )
 }
